@@ -34,11 +34,19 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
               }
             ],
             "styles": [
-              "src/styles.scss"
-            ]
+              "src/styles.scss",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",   
+              "src/theme/variables.scss"
+              ]
+
           },
           "configurations": {
             "production": {
@@ -92,10 +100,16 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets",
+                "output": "assets"
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/theme/variables.scss"
             ]
           }
         }
