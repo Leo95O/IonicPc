@@ -1,9 +1,12 @@
 import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {IonicModule} from '@ionic/angular';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { IonicModule } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+
+
+
 
 @NgModule({
   declarations: [
@@ -12,7 +15,9 @@ import { App } from './app';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    IonicModule.forRoot()
+    FontAwesomeModule,
+    IonicModule.forRoot({})
+
   ],
   providers: [
     provideBrowserGlobalErrorListeners()

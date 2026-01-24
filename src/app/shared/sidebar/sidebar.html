@@ -1,0 +1,35 @@
+<ion-menu side="start" menuId="main-menu" contentId="main-content">
+  <ion-header class="bg-red-600 text-white">
+    <ion-toolbar>
+      <ion-title class="text-lg font-bold">🍴 Mi Restaurante</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content class="bg-gray-100">
+    <ion-list>
+      <!-- Inicio -->
+      <ion-item routerLink="/home" routerDirection="root">
+        <ion-icon slot="start" class="fa fa-home text-red-600"></ion-icon>
+        <ion-label class="font-medium">Inicio</ion-label>
+      </ion-item>
+
+      <!-- Menú -->
+      <ion-item routerLink="/menu">
+        <ion-icon slot="start" class="fa fa-utensils text-red-600"></ion-icon>
+        <ion-label class="font-medium">Menú</ion-label>
+      </ion-item>
+
+      <!-- Reservas -->
+      <ion-item routerLink="/reservas">
+        <ion-icon slot="start" class="fa fa-calendar text-red-600"></ion-icon>
+        <ion-label class="font-medium">Reservas</ion-label>
+      </ion-item>
+
+      <!-- Contacto -->
+      <ion-item routerLink="/contacto">
+        <ion-icon slot="start" class="fa fa-phone text-red-600"></ion-icon>
+        <ion-label class="font-medium">Contacto</ion-label>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

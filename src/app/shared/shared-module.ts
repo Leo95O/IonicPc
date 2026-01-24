@@ -1,14 +1,28 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 
-import { SharedRoutingModule } from './shared-routing-module';
+
+import { Layout } from './layout/layout';
+import { Headers } from './headers/headers';
+import { Sidebar } from './sidebar/sidebar';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    Layout,
+    Headers,
+    Sidebar
+  ],
   imports: [
     CommonModule,
-    SharedRoutingModule
+
+    IonicModule,
+  ],
+  exports: [
+    Layout,
+    Headers,
+    Sidebar
   ]
 })
 export class SharedModule { }
