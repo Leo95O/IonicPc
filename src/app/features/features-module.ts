@@ -6,16 +6,16 @@ import { PageNotFound } from './page-not-found/page-not-found';
 
 @NgModule({
   declarations: [
-    PageNotFound
+
   ],
   imports: [
     CommonModule,
     FeaturesRoutingModule,
     SharedModule,
-    PageNotFound
+
   ],
   exports: [
-    PageNotFound
+
 
   ]
 })

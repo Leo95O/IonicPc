@@ -16,6 +16,9 @@ const routes: Routes = [
     CommonModule,
     IonicModule,
     RouterModule.forChild(routes) 
+  ],
+  exports: [
+    PageNotFound 
   ]
 })
 export class PageNotFoundModule { }
