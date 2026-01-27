@@ -1,34 +1,34 @@
-<ion-menu side="start" menuId="main-menu" contentId="main-content">
-  <ion-header class="bg-red-600 text-white">
-    <ion-toolbar>
-      <ion-title class="text-lg font-bold">🍴 Mi Restaurante</ion-title>
+<ion-menu side="end" menuId="mobile-menu" contentId="main-content" type="overlay">
+  
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menú</ion-title>
+      <ion-buttons slot="end">
+        <ion-menu-button menu="mobile-menu" autoHide="false"></ion-menu-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content class="bg-gray-100">
+  <ion-content>
     <ion-list>
-      <!-- Inicio -->
-      <ion-item routerLink="/home" routerDirection="root">
-        <ion-icon slot="start" class="fa fa-home text-red-600"></ion-icon>
-        <ion-label class="font-medium">Inicio</ion-label>
+      <ion-item routerLink="/inicio" routerDirection="root" lines="full" detail="true">
+        <ion-icon slot="start" class="fa fa-home text-blue-500"></ion-icon>
+        <ion-label>Inicio</ion-label>
       </ion-item>
 
-      <!-- Menú -->
-      <ion-item routerLink="/menu">
-        <ion-icon slot="start" class="fa fa-utensils text-red-600"></ion-icon>
-        <ion-label class="font-medium">Menú</ion-label>
+      <ion-item routerLink="/menu" routerDirection="root" lines="full" detail="true">
+        <ion-icon slot="start" class="fa fa-book-open text-blue-500"></ion-icon>
+        <ion-label>Carta / Menú</ion-label>
       </ion-item>
 
-      <!-- Reservas -->
-      <ion-item routerLink="/reservas">
-        <ion-icon slot="start" class="fa fa-calendar text-red-600"></ion-icon>
-        <ion-label class="font-medium">Reservas</ion-label>
+      <ion-item routerLink="/reservas" routerDirection="root" lines="full" detail="true">
+        <ion-icon slot="start" class="fa fa-calendar-check text-blue-500"></ion-icon>
+        <ion-label>Reservas</ion-label>
       </ion-item>
 
-      <!-- Contacto -->
-      <ion-item routerLink="/contacto">
-        <ion-icon slot="start" class="fa fa-phone text-red-600"></ion-icon>
-        <ion-label class="font-medium">Contacto</ion-label>
+      <ion-item routerLink="/contacto" routerDirection="root" lines="full" detail="true">
+        <ion-icon slot="start" class="fa fa-headset text-blue-500"></ion-icon>
+        <ion-label>Contacto</ion-label>
       </ion-item>
     </ion-list>
   </ion-content>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-layout',
@@ -7,5 +8,23 @@ import { Component } from '@angular/core';
   styleUrl: './layout.scss',
 })
 export class Layout {
+  
+  // Controla si el Sidebar está "Anclado/Fijo" en pantallas grandes
+  public isSidebarDocked: boolean = true;
 
+  constructor(private menuCtrl: MenuController) {}
+
+  // Esta función se ejecuta cuando clickean el botón del Header
+  toggleSidebar() {
+    // Detectamos si es pantalla grande (Desktop/Laptop)
+    const isDesktop = window.innerWidth >= 768; // 768px es el breakpoint 'md'
+
+    if (isDesktop) {
+      // EN DESKTOP: Alternamos entre mostrar u ocultar el panel fijo
+      this.isSidebarDocked = !this.isSidebarDocked;
+    } else {
+      // EN MÓVIL: Usamos la función nativa de Ionic para abrir/cerrar el menú flotante
+      this.menuCtrl.toggle();
+    }
+  }
 }

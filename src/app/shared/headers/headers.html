@@ -1,1 +1,44 @@
-<p>headers works!</p>
+<ion-header class="ion-no-border shadow-sm bg-white">
+  <ion-toolbar color="light" class="px-2 md:px-6">
+
+    <div slot="start" class="flex items-center cursor-pointer" routerLink="/inicio">
+      <span class="font-bold text-xl md:text-2xl">
+        <span class="text-blue-600">Restaurant</span><span class="text-gray-600">.pe</span>
+      </span>
+    </div>
+
+    <div class="hidden sm:flex flex-row items-center justify-end w-full gap-6">
+      
+      <a routerLink="/inicio" routerLinkActive="text-blue-600 font-bold bg-blue-50" 
+         class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
+         <i class="fa fa-home"></i> Inicio
+      </a>
+
+      <a routerLink="/menu" routerLinkActive="text-blue-600 font-bold bg-blue-50"
+         class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
+         <i class="fa fa-book-open"></i> Menú
+      </a>
+
+      <a routerLink="/reservas" routerLinkActive="text-blue-600 font-bold bg-blue-50"
+         class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
+         <i class="fa fa-calendar-check"></i> Reservas
+      </a>
+
+       <a routerLink="/contacto" routerLinkActive="text-blue-600 font-bold bg-blue-50"
+       class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
+       <i class="fa fa-headset"></i> Contacto
+    </a>
+
+      <div class="border-l pl-4 ml-2">
+        <ion-avatar class="w-8 h-8 cursor-pointer hover:opacity-80">
+          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        </ion-avatar>
+      </div>
+    </div>
+
+    <ion-buttons slot="end" class="sm:hidden">
+      <ion-menu-button menu="mobile-menu" color="primary"></ion-menu-button>
+    </ion-buttons>
+
+  </ion-toolbar>
+</ion-header>

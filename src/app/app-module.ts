@@ -4,6 +4,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { IonicModule } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
+import { SharedModule } from './shared/shared-module';
+import { CoreModule } from './core/core-module';
+import { provideHttpClient } from '@angular/common/http';
 
 
 
@@ -16,10 +19,14 @@ import { App } from './app';
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    IonicModule.forRoot({})
+    IonicModule.forRoot({}),
+    SharedModule,
+    CoreModule
+  
 
   ],
   providers: [
+    provideHttpClient(),
     provideBrowserGlobalErrorListeners()
   ],
   bootstrap: [App]

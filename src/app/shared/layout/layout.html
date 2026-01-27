@@ -1,21 +1,13 @@
 <ion-app>
-  <div class="flex flex-col w-full h-screen overflow-hidden">
-    <!-- Header -->
+  <app-sidebar></app-sidebar>
+
+  <div class="ion-page" id="main-content">
+    
     <app-headers></app-headers>
 
-    <div class="flex flex-row flex-grow">
-      <!-- Sidebar -->
-      <app-sidebar>
-        
-      </app-sidebar>
-      
+    <ion-content class="bg-gray-50">
+      <ion-router-outlet></ion-router-outlet>
+    </ion-content>
 
-      <!-- Contenido principal -->
-      <div class="flex flex-col flex-grow overflow-auto z-10">
-        <ion-content class="flex-1 overflow-auto">
-          <ion-router-outlet></ion-router-outlet>
-        </ion-content>
-      </div>
-    </div>
   </div>
 </ion-app>
