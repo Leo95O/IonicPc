@@ -1,5 +1,6 @@
 // Ionic Variables and Theming. For more info, please see:
 // http://ionicframework.com/docs/theming/
+// ruta C:\Users\Joel Olaya\OneDrive\Documentos\Prácticas\IonicPc\src\theme\variables.scss
 
 /** Ionic CSS Variables **/
 :root {
@@ -81,6 +82,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
+
   /*
    * Dark Colors
    * -------------------------------------------
@@ -195,7 +197,6 @@
     --ion-toolbar-background: var(--ion-color-step-150);
     --ion-toolbar-border-color: var(--ion-color-step-250);
   }
-
 
   /*
    * Material Design Dark Theme

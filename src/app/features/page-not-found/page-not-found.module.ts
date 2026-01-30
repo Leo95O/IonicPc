@@ -5,8 +5,16 @@ import { IonicModule } from '@ionic/angular';
 import { PageNotFound } from './page-not-found'; 
 
 const routes: Routes = [
-  { path: '', component: PageNotFound }
-];
+  
+
+      {
+       path: '', 
+       component: PageNotFound
+      },
+      
+  ]
+
+;
 
 @NgModule({
   declarations: [

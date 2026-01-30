@@ -1,1 +1,38 @@
-<p>login works!</p>
+<ion-content class="ion-padding">
+  <div class="flex flex-col h-full justify-center items-center">
+    
+    <ion-card class="w-full max-w-md">
+      <ion-card-header>
+        <ion-card-title class="text-center text-2xl font-bold">Bienvenido</ion-card-title>
+        <ion-card-subtitle class="text-center">Ingresa a Tareas.local</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          
+          <ion-item class="ion-margin-bottom">
+            <ion-label position="floating">Correo Electrónico</ion-label>
+            <ion-input type="email" formControlName="email" placeholder="email@ejemplo.com"></ion-input>
+          </ion-item>
+          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500 text-sm px-4">
+            Correo inválido
+          </div>
+
+          <ion-item class="ion-margin-bottom">
+            <ion-label position="floating">Contraseña</ion-label>
+            <ion-input type="password" formControlName="password"></ion-input>
+          </ion-item>
+          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-sm px-4">
+            Contraseña requerida
+          </div>
+
+          <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="mt-6">
+            Ingresar
+          </ion-button>
+
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+  </div>
+</ion-content>

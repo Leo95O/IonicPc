@@ -21,13 +21,18 @@ module.exports = {
       // => @media (min-width: 1536px) { ... }
 
       '3xl': '1920px',
-      // => @media (max-width: 1920px) { ... }
+      // => @media (min-width: 1920px) { ... }
 
       '4xl': '2500px',
-      // => @media (max-width: 2500px) { ... }
+      // => @media (min-width: 2500px) { ... }
 
     },
     extend: {},
+  },
+  corePlugins: {
+
+    preflight: false, 
+
   },
   plugins: [],
 }

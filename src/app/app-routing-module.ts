@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Layout } from './shared/layout/layout';
-import { CoreModule } from './core/core-module';
-import { AuthModule } from './features/auth/auth-module';
+
 
 
 const routes: Routes = [
@@ -15,10 +13,14 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./features/auth/auth-module').then(m => m.AuthModule)
   },
+  {
+    path: 'page-not-found',
+    loadChildren: () => import('./features/page-not-found/page-not-found.module').then(m => m.PageNotFoundModule)
+  },
 
   {
   path: '**',
-  loadChildren: () => import('./features/page-not-found/page-not-found').then(m => m.PageNotFound)
+  redirectTo: '/page-not-found'
   }
 ];
 
