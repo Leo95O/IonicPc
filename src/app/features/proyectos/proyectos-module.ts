@@ -1,17 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular'; // Importante para reconocer ion-header, ion-card, etc.
+import { IonicModule } from '@ionic/angular'; 
 import { RouterModule } from '@angular/router';
 
+// Importación única y correcta del componente
 import { ProyectosListComponent } from './components/proyectos-list/proyectos-list';
-import { ProyectosList } from './components/proyectos-list/proyectos-list';
 
 @NgModule({
-  declarations: [ProyectosListComponent],
+  declarations: [
+    ProyectosListComponent
+  ],
   imports: [
     CommonModule,
-    IonicModule,
-    RouterModule.forChild([{ path: '', component: ProyectosListComponent }])
+    IonicModule, // Necesario para ion-header, ion-card, etc.
+    RouterModule.forChild([
+      { 
+        path: '', 
+        component: ProyectosListComponent 
+      }
+    ])
+  ],
+  exports: [
+    ProyectosListComponent
   ]
 })
 export class ProyectosModule {}

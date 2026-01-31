@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProyectosListComponent } from './components/proyectos-list/proyectos-list';
+
 
 const routes: Routes = [
   {
-    path: 'proyectos',
-    loadChildren: () => import('./proyectos/proyectos-module').then(m => m.ProyectosModule)
+    path: '', 
+    component: ProyectosListComponent
   }
 ];
 

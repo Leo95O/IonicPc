@@ -1,9 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Proyecto } from 'src/app/core/models/proyecto.model';
-import { ApiResponse } from 'src/app/core/models/api-response.model';
+import { environment } from '../../../../environments/environment';
+import { Proyecto } from '../../../core/models/proyecto.model';
+import { ApiResponse } from '../../../core/models/api-response.model';
 
 @Injectable({
   providedIn: 'root'
