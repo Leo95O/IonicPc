@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="text-2xl font-bold">Mis Proyectos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    @for (proyecto of proyectos$ | async; track proyecto.id) {
+      <ion-card class="m-0 shadow-md border-l-4 border-primary">
+        <ion-card-header>
+          <div class="flex justify-between items-start">
+            <ion-card-title class="text-lg font-bold">{{ proyecto.nombre }}</ion-card-title>
+            <ion-badge [color]="proyecto.estadoId === 1 ? 'success' : 'warning'">
+              {{ proyecto.estadoId === 1 ? 'Activo' : 'En Pausa' }}
+            </ion-badge>
+          </div>
+          <ion-card-subtitle class="mt-2 text-gray-600">
+            ID Sucursal: {{ proyecto.sucursalId }}
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <p class="line-clamp-2 mb-4 text-gray-500">
+            {{ proyecto.descripcion }}
+          </p>
+          
+          <div class="flex items-center text-sm text-gray-400">
+            <ion-icon name="calendar-outline" class="mr-2"></ion-icon>
+            <span>Inicio: {{ proyecto.fechaInicio }}</span>
+          </div>
+        </ion-card-content>
+
+        <ion-item lines="none" class="ion-no-padding px-4 pb-2">
+          <ion-button fill="clear" slot="end" [routerLink]="['/tareas', proyecto.id]">
+            Ver Tareas
+            <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+          </ion-button>
+        </ion-item>
+      </ion-card>
+    } @empty {
+      <div class="col-span-full flex flex-col items-center justify-center py-20 text-gray-400">
+        <ion-icon name="folder-open-outline" class="text-6xl mb-4"></ion-icon>
+        <p class="text-lg">No se encontraron proyectos disponibles.</p>
+      </div>
+    }
+  </div>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
