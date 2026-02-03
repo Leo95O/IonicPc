@@ -9,7 +9,9 @@ import { TareasRoutingModule } from './tareas-routing-module';
 
 // src/app/features/tareas/tareas-module.ts
 @NgModule({
-  declarations: [],
+  declarations: [
+    TareasListComponent
+  ],
   imports: [
     CommonModule,
     IonicModule,

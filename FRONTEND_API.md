@@ -2,6 +2,25 @@
 
 Este documento sirve como referencia técnica para conectar el Frontend (Angular) con el Backend (Slim PHP Legacy Refactorizado).
 
+# 📦 Stack Tecnológico (Versiones)
+Angular: 20.3.0 (Core, Common, Router, Forms).
+
+Standalone : false
+
+Ionic Framework: 8.7.17 (@ionic/angular).
+
+Tailwind CSS: 3.4.
+
+FontAwesome:
+
+Librería Angular: 3.0.0 (@fortawesome/angular-fontawesome).
+
+Iconos/Core: 7.1.0 (Free Solid & Global).
+
+RxJS: ~7.8.0.
+
+TypeScript: ~5.9.2.
+
 ## 1. Configuración Global
 
 * **Base URL (Virtual Host):** `http://tareas.local`
