@@ -9,6 +9,7 @@ import { Output } from '@angular/core';
   styleUrl: './headers.scss',
 })
 export class Headers {
+  
   @Output() toggleSidebar = new EventEmitter<void>();
 
   constructor() {}
@@ -17,5 +18,6 @@ export class Headers {
   onMenuClick() {
     this.toggleSidebar.emit();
   }
+  
 
 }

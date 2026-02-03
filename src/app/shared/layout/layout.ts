@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 
+
+
 @Component({
   selector: 'app-layout',
   standalone: false,
@@ -8,6 +10,7 @@ import { MenuController } from '@ionic/angular';
   styleUrl: './layout.scss',
 })
 export class Layout {
+  
   
   // Controla si el Sidebar está "Anclado/Fijo" en pantallas grandes
   public isSidebarDocked: boolean = true;
@@ -27,4 +30,5 @@ export class Layout {
       this.menuCtrl.toggle();
     }
   }
+  
 }

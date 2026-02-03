@@ -1,17 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Vital para pipes como | async
-import { IonicModule } from '@ionic/angular';   // Vital para <ion-content>, <ion-item>
+import { CommonModule } from '@angular/common';
+import { IonicModule } from '@ionic/angular';
 import { TareasRoutingModule } from './tareas-routing-module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { TareasListComponent } from './components/tareas-list/tareas-list';
+
+
 
 @NgModule({
   declarations: [
-    TareasListComponent // Declaramos el componente aquí
+    TareasListComponent
   ],
   imports: [
     CommonModule,
-    IonicModule, // <--- ¡ESTO ES LO QUE FALTABA PARA QUE SE VEA!
-    TareasRoutingModule
+    IonicModule,
+    TareasRoutingModule,
+    FontAwesomeModule 
   ]
 })
 export class TareasModule { }

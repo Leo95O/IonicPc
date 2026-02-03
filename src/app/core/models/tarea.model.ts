@@ -4,7 +4,9 @@ export interface Tarea {
   descripcion: string;
   proyectoId: number;
   prioridadId: number;
-  usuarioAsignado: number;
-  fechaLimite: string;
+  prioridadLabel?: string;
+  usuarioAsignado: number | null;
+  fechaLimite: Date;      
   estadoId: number;
+  estadoLabel?: string;
 }
