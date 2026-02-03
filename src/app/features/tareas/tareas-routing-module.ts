@@ -3,9 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { TareasListComponent } from './components/tareas-list/tareas-list';
 
 const routes: Routes = [
+  // Ruta 1: Vista general (Todas las tareas)
   {
-    path: ':proyectoId', // Recibe el ID del proyecto desde la URL
-    component: TareasListComponent // El componente que crearemos a continuación
+    path: '',
+    component: TareasListComponent
+  },
+  // Ruta 2: Vista filtrada (Tareas de un proyecto)
+  {
+    path: ':proyectoId',
+    component: TareasListComponent
   }
 ];
 

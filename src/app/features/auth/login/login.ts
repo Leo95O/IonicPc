@@ -40,7 +40,7 @@ export class Login {
       next: async (success) => {
         await loading.dismiss();
         if (success) {
-        this.router.navigate(['/features/inicio'], { replaceUrl: true });
+        this.router.navigate(['/features'], { replaceUrl: true });
         }
       },
       error: async (err) => {

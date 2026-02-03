@@ -11,18 +11,22 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'inicio',
+        redirectTo: 'tareas', // <--- CAMBIO CLAVE: Ahora inicia en Tareas
         pathMatch: 'full'
       },
       {
         path: 'inicio',
-        loadChildren: () => import('./inicio/inicio-module').then(m => m.InicioModule)
+        redirectTo: 'tareas', // Redirección de seguridad para evitar "limbo"
+        pathMatch: 'full'
       },
       {
         path: 'proyectos',
         loadChildren: () => import('./proyectos/proyectos-module').then(m => m.ProyectosModule)
+      },
+      {
+        path: 'tareas',
+        loadChildren: () => import('./tareas/tareas-module').then(m => m.TareasModule)
       }
-      // En el futuro: { path: 'tareas', loadChildren: ... }
     ]
   }
 ];

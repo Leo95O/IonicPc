@@ -18,6 +18,7 @@ const routes: Routes = [
     path: 'features',
     loadChildren: () => import('./features/features-module').then(m => m.FeaturesModule)
   },
+  
   {
     path: 'page-not-found',
     loadChildren: () => import('./features/page-not-found/page-not-found.module').then(m => m.PageNotFoundModule)

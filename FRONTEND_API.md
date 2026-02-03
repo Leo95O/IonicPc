@@ -1,176 +1,297 @@
-# 📘 Guía de Integración Backend - Tareas RST
+# 📘 Backend REST – Documentación Técnica & Guía de Integración Frontend
 
-Este documento sirve como referencia técnica para conectar el Frontend (Angular) con el Backend (Slim PHP Legacy Refactorizado).
+Backend legacy desarrollado en **PHP 7.1.3** usando **Slim Framework 2**, expuesto mediante una API REST.
+Este documento cumple dos objetivos claros:
 
-# 📦 Stack Tecnológico (Versiones)
-Angular: 20.3.0 (Core, Common, Router, Forms).
-
-Standalone : false
-
-Ionic Framework: 8.7.17 (@ionic/angular).
-
-Tailwind CSS: 3.4.
-
-FontAwesome:
-
-Librería Angular: 3.0.0 (@fortawesome/angular-fontawesome).
-
-Iconos/Core: 7.1.0 (Free Solid & Global).
-
-RxJS: ~7.8.0.
-
-TypeScript: ~5.9.2.
-
-## 1. Configuración Global
-
-* **Base URL (Virtual Host):** `http://tareas.local`
-* **Autenticación:** Bearer Token.
-* **Header Obligatorio:** `Authorization: Bearer <TOKEN_JWT>`
+1. 📚 Documentar fielmente el comportamiento real del backend (fuente de verdad).
+2. 🧩 Guiar su consumo desde el frontend desarrollado en Angular + Ionic.
 
 ---
 
-## 2. Estándar de Respuesta (Interceptor)
+## 📦 Stack Frontend Objetivo
 
-El backend siempre responde con esta estructura ("The Wrapper"). Se debe crear un Interceptor en Angular para manejar los mensajes automáticos.
-
-```typescript
-// core/interfaces/api-response.interface.ts
-export interface ApiResponse<T> {
-  tipo: number;       // 1: Éxito, 2: Alerta/Validación, 3: Error Crítico
-  mensajes: string[]; // Lista de mensajes para mostrar en Toasts
-  data: T;            // El payload real (objeto, array o null)
-}
-
-¡Claro que sí! Aquí tienes un archivo Markdown (.md) profesional y listo para guardar en tu carpeta de Frontend.
-
-Este archivo condensa toda la información técnica, los contratos de datos y las "trampas" que descubrimos durante el debugging, para que no tengas que buscar en el chat mientras programas en Angular.
-
-Guárdalo como README_FRONTEND_API.md en la raíz de tu proyecto Angular.
-
-Markdown
-# 📘 Guía de Integración Backend - Tareas RST
-
-Este documento sirve como referencia técnica para conectar el Frontend (Angular) con el Backend (Slim PHP Legacy Refactorizado).
-
-## 1. Configuración Global
-
-* **Base URL (Virtual Host):** `http://tareas.local`
-* **Autenticación:** Bearer Token.
-* **Header Obligatorio:** `Authorization: Bearer <TOKEN_JWT>`
+- Angular 20.3.0 (Core, Common, Router, Forms)
+- Arquitectura modular (Standalone: false)
+- Ionic Framework 8.7.17 (@ionic/angular)
+- RxJS ~7.8.0
+- TypeScript ~5.9.2
+- Tailwind CSS 3.4
+- FontAwesome:
+  - @fortawesome/angular-fontawesome 3.0.0
+  - Free Solid & Global 7.1.0
 
 ---
 
-## 2. Estándar de Respuesta (Interceptor)
+## 1️⃣ Consideraciones Generales del Backend
 
-El backend siempre responde con esta estructura ("The Wrapper"). Se debe crear un Interceptor en Angular para manejar los mensajes automáticos.
+- **Base URL**: `/backend/public`
+- **Arquitectura**: Slim Framework 2 (Legacy)
+- **Autenticación**: JWT
+- **Header obligatorio**:
+Authorization: Bearer <TOKEN_JWT>
 
 
-typescript
-// core/interfaces/api-response.interface.ts
-export interface ApiResponse<T> {
-  tipo: number;       // 1: Éxito, 2: Alerta/Validación, 3: Error Crítico
-  mensajes: string[]; // Lista de mensajes para mostrar en Toasts
-  data: T;            // El payload real (objeto, array o null)
+### Wrapper global de respuesta
+
+Todas las respuestas siguen esta estructura:
+
+```json
+{
+"tipo": 1,
+"mensajes": ["Mensaje descriptivo"],
+"data": {}
 }
+Significado de tipo:
 
-Lógica de UI recomendada:
+1 → Éxito
 
-Tipo 1 (Verde): Retornar data al componente. (Opcional: mostrar Toast si es una acción de guardar/editar).
+2 → Alerta / Validación
 
-Tipo 2 (Amarillo): Mostrar mensajes en Warning Toast. Retornar null o lanzar error controlado.
+3 → Error crítico
 
-Tipo 3 (Rojo): Mostrar mensajes en Error Toast.
+Convenciones de datos
+IDs: int
 
-3. Modelos de Datos (Interfaces TypeScript)
-Mapeo de las respuestas de Base de Datos (snake_case) a TypeScript (camelCase).
+Fechas: YYYY-MM-DD o YYYY-MM-DD HH:mm:ss
 
-👤 Usuario
+Booleanos: 1 / 0 o por presencia de fecha (fecha_eliminacion)
+
+Eliminaciones: Soft Delete
+
+2️⃣ Contrato Técnico de Endpoints (Fuente de Verdad)
+Todo lo descrito a continuación proviene directamente del backend.
+No hay inferencias ni suposiciones.
+
+🔐 Autenticación y Usuarios
+🔹 POST /usuarios/login
+Descripción
+Inicia sesión validando credenciales, estado del usuario y reglas de seguridad anti-fuerza bruta (LoginGuard).
+
+Body (JSON)
+
+usuario_correo (string, requerido)
+
+usuario_password (string, requerido)
+
+Respuesta (data)
+
+usuario:
+
+usuario_id (int)
+
+usuario_nombre (string, desencriptado)
+
+usuario_correo (string)
+
+rol_id (int)
+
+rol: {id, nombre}
+
+usuario_estado (int)
+
+estado: {id, nombre, descripcion}
+
+fecha_creacion (string)
+
+token (JWT)
+
+Errores
+
+400: Credenciales incorrectas
+
+400: Usuario bloqueado por LoginGuard
+
+🔹 GET /usuarios/admin/listar
+Roles: ADMIN
+Query Params
+
+rol_id (int, opcional)
+
+Respuesta
+
+Lista de usuarios (misma estructura que login, sin token)
+
+🔹 POST /usuarios/admin/crear
+Roles: ADMIN
+
+Body
+
+usuario_nombre (string, requerido)
+
+usuario_correo (string, requerido)
+
+usuario_password (string, requerido)
+
+rol_id (int, requerido)
+
+usuario_estado (int, opcional, default 1)
+
+🔹 PUT /usuarios/admin/editar/:id
+Roles: ADMIN
+
+Path Param
+
+id (int)
+
+Body
+Campos opcionales. Si se envía usuario_password, se re-encripta.
+
+🔹 DELETE /usuarios/admin/:id
+Descripción
+Borrado lógico. No permite eliminar al usuario del token actual.
+
+🏢 Sucursales
+🔹 GET /sucursales/listar
+Roles: Cualquier usuario autenticado
+
+Respuesta
+
+id, nombre, direccion, estado_id
+
+estado (si está hidratado)
+
+🔹 POST /sucursales/crear
+Roles: ADMIN
+
+Observación
+
+El estado se asigna automáticamente como ACTIVO.
+
+🔹 PUT /sucursales/editar/:id
+Actualización parcial.
+
+🔹 DELETE /sucursales/:id
+Soft delete (estado INACTIVO).
+
+🚀 Proyectos
+🔹 GET /proyectos/
+Query Params
+
+sucursal_id (int, opcional)
+
+🔹 GET /proyectos/:id
+Detalle de proyecto.
+
+🔹 POST /proyectos/
+Roles: ADMIN, PROJECT_MANAGER
+
+Observaciones
+
+usuario_creador se obtiene del token
+
+fecha_inicio ≤ fecha_fin
+
+estado_id default = ACTIVO
+
+🔹 PUT /proyectos/:id
+Actualización parcial.
+
+🔹 DELETE /proyectos/:id
+Soft delete (fecha_eliminacion).
+
+✅ Tareas
+🔹 GET /tareas/
+Query Params
+
+proyecto_id (int)
+
+usuario_asignado (int)
+
+Regla crítica
+
+Rol USER → el backend fuerza usuario_asignado al usuario del token.
+
+🔹 POST /tareas/
+Observaciones
+
+Rol USER → auto-asignación obligatoria
+
+estado_id default = POR_HACER
+
+🔹 PUT /tareas/:id
+Actualización parcial (ideal para Kanban).
+
+🔹 POST /tareas/:id/asignar
+Asigna usuario a tarea.
+
+🔹 DELETE /tareas/:id
+Soft delete (ADMIN / PM).
+
+📊 Reportes y DataMaster
+🔹 GET /datamaster/catalogos
+Devuelve catálogos maestros:
+
+roles
+
+estados
+
+prioridades
+
+etc.
+
+🔹 GET /reportes/dashboard
+Comportamiento por rol
+
+ADMIN / PM → métricas globales
+
+USER → métricas solo propias
+
+🔹 GET /reportes/admin-stats
+Carga de trabajo por usuario.
+
+3️⃣ Adaptación Frontend (Angular)
+Interceptor recomendado
+export interface ApiResponse<T> {
+  tipo: number;
+  mensajes: string[];
+  data: T;
+}
+UI Flow
+
+Tipo 1 → continuar
+
+Tipo 2 → warning controlado
+
+Tipo 3 → error bloqueante
+
+4️⃣ Modelos TypeScript (camelCase)
 export interface Usuario {
-  usuarioId: number;      // DB: usuario_id / Token: sub
-  nombre: string;         // DB: usuario_nombre
-  correo: string;         // DB: usuario_correo
-  rolId: number;          // DB: rol_id (1: Admin, 2: PM, 3: User)
-  activo?: number;        // DB: usuario_active (1 o 0)
+  usuarioId: number;
+  nombre: string;
+  correo: string;
+  rolId: number;
+  activo?: number;
 }
-
-🚀 Proyecto
-
 export interface Proyecto {
-  id: number;             // DB: proyecto_id
-  nombre: string;         // DB: proyecto_nombre
-  descripcion: string;    // DB: proyecto_descripcion
-  fechaInicio: string;    // DB: fecha_inicio (YYYY-MM-DD)
-  fechaFin?: string;      // DB: fecha_fin
-  estadoId: number;       // DB: estado_id
-  sucursalId: number;     // DB: sucursal_id
+  id: number;
+  nombre: string;
+  descripcion?: string;
+  fechaInicio: string;
+  fechaFin?: string;
+  estadoId: number;
+  sucursalId: number;
 }
-
-✅ Tarea
-
 export interface Tarea {
-  id: number;             // DB: tarea_id
-  titulo: string;         // DB: tarea_titulo
-  descripcion: string;    // DB: tarea_descripcion
-  proyectoId: number;     // DB: proyecto_id
-  prioridadId: number;    // DB: prioridad_id
-  usuarioAsignado: number;// DB: usuario_asignado
-  fechaLimite: string;    // DB: fecha_limite (YYYY-MM-DD)
-  estadoId: number;       // DB: estado_id
+  id: number;
+  titulo: string;
+  descripcion?: string;
+  proyectoId: number;
+  prioridadId: number;
+  usuarioAsignado: number;
+  fechaLimite: string;
+  estadoId: number;
 }
+5️⃣ Reglas de Negocio y Gotchas
+Fechas siempre como string YYYY-MM-DD
 
-4. Catálogo de Servicios y Endpoints
-🔐 AuthService
+IDs siempre number
 
-Método,Endpoint,Body (JSON),Nota
-POST,/usuarios/login,"{ ""usuario_correo"": ""..."", ""usuario_password"": ""..."" }",Único endpoint que usa llaves largas en el input.
+Rol 3 (USER):
 
-👥 UsuarioService (Solo Admin)
+No puede asignar tareas a otros
 
-Método,Endpoint,Body Input,Nota
-GET,/usuarios/admin/listar,-,Trae todos.
-POST,/usuarios/admin/crear,"{ ""usuario_nombre"": ""..."", ""usuario_correo"": ""..."", ""usuario_password"": ""..."", ""rol_id"": # }",
-PUT,/usuarios/admin/editar/:id,"{ ""usuario_nombre"": ""..."", ""rol_id"": # }",Actualización parcial.
-DELETE,/usuarios/admin/:id,-,Soft delete.
+Filtros forzados por backend
 
-🏢 SucursalService
+Inputs usan llaves cortas, outputs llaves largas
 
-Método,Endpoint,Body Input,Nota
-GET,/sucursales/listar,-,Público para cualquier logueado.
-POST,/sucursales/crear,"{ ""sucursal_nombre"": ""..."", ""sucursal_direccion"": ""..."" }",Solo Admin.
-
-🚀 ProyectoService
-⚠️ IMPORTANTE: El Input (Body) usa llaves cortas, pero la Output (Respuesta) trae llaves largas.
-
-Método,Endpoint,Body Input (Llaves Cortas),Obligatorios
-GET,/proyectos/,(Query Params),
-POST,/proyectos/,"{ ""nombre"": ""..."", ""descripcion"": ""..."", ""fecha_inicio"": ""YYYY-MM-DD"", ""estado_id"": 1, ""sucursal_id"": 1 }",sucursal_id
-PUT,/proyectos/:id,"{ ""estado_id"": 2 }",Puede ser parcial.
-DELETE,/proyectos/:id,-,Solo Admin/PM.
-
-📝 TareaService
-⚠️ IMPORTANTE: proyecto_id es vital para crear.
-
-Método,Endpoint,Body Input (Llaves Cortas),Obligatorios
-GET,/tareas/,?proyecto_id=X,Filtrar siempre por proyecto.
-POST,/tareas/,"{ ""titulo"": ""..."", ""descripcion"": ""..."", ""prioridad_id"": #, ""fecha_limite"": ""..."", ""usuario_asignado"": #, ""proyecto_id"": # }",proyecto_id
-PUT,/tareas/:id,"{ ""estado_id"": 3 }",Para mover Kanban.
-POST,/tareas/:id/asignar,"{ ""usuario_id"": 5 }",Reasignación específica.
-
-📊 DashboardService
-Método,Endpoint,Nota
-GET,/reportes/dashboard,"El backend detecta el Rol automáticamente. Admin ve globales, User ve sus métricas."
-
-5. Reglas de Negocio y Gotchas
-Fechas: Siempre enviar strings formateados como "YYYY-MM-DD".
-
-IDs: Enviar siempre como Number (enteros), no strings.
-
-Roles:
-
-1: Admin (Dios).
-
-2: Project Manager (Gestión de Proyectos/Tareas).
-
-3: Usuario (Solo ve y edita sus tareas asignadas).
-
-Auto-Asignación (Rol 3): Si un Usuario normal crea una tarea, el backend ignora el campo usuario_asignado y se la asigna a él mismo. El Frontend puede ocultar ese select para Rol 3.
+Soft delete en casi todo

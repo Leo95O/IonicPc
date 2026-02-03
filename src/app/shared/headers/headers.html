@@ -1,37 +1,18 @@
 <ion-header class="ion-no-border shadow-sm bg-white">
   <ion-toolbar color="light" class="px-2 md:px-6">
 
-    <div slot="start" class="flex items-center cursor-pointer" routerLink="/inicio">
-      <span class="font-bold text-xl md:text-2xl">
-        <span class="text-blue-600">Restaurant</span><span class="text-gray-600">.pe</span>
+    <div slot="start" class="flex items-center" routerLink="/features/tareas">
+      <ion-icon name="layers" color="primary" class="text-2xl mr-2"></ion-icon>
+      <span class="font-bold text-xl md:text-2xl text-gray-800">
+        Tareas<span class="text-blue-600">RST</span>
       </span>
     </div>
 
     <div class="hidden sm:flex flex-row items-center justify-end w-full gap-6">
-      
-      <a routerLink="/inicio" routerLinkActive="text-blue-600 font-bold bg-blue-50" 
-         class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
-         <i class="fa fa-home"></i> Inicio
-      </a>
-
-      <a routerLink="/menu" routerLinkActive="text-blue-600 font-bold bg-blue-50"
-         class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
-         <i class="fa fa-book-open"></i> Menú
-      </a>
-
-      <a routerLink="/reservas" routerLinkActive="text-blue-600 font-bold bg-blue-50"
-         class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
-         <i class="fa fa-calendar-check"></i> Reservas
-      </a>
-
-       <a routerLink="/contacto" routerLinkActive="text-blue-600 font-bold bg-blue-50"
-       class="text-gray-600 hover:text-blue-600 px-4 py-2 rounded-full transition-colors flex items-center gap-2 no-underline cursor-pointer">
-       <i class="fa fa-headset"></i> Contacto
-    </a>
-
-      <div class="border-l pl-4 ml-2">
+      <div class="border-l pl-4 ml-2 flex items-center gap-2">
+        <span class="text-sm text-gray-500">Bienvenido</span>
         <ion-avatar class="w-8 h-8 cursor-pointer hover:opacity-80">
-          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Perfil" />
         </ion-avatar>
       </div>
     </div>

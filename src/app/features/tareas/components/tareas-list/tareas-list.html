@@ -1,52 +1,73 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/features/proyectos"></ion-back-button>
+      @if (proyectoId) {
+        <ion-back-button defaultHref="/features/proyectos" text="Proyectos"></ion-back-button>
+      }
     </ion-buttons>
-    <ion-title class="font-bold">Tareas del Proyecto #{{ proyectoId }}</ion-title>
+    
+    <ion-title class="font-bold">
+      @if (proyectoId) {
+        Tareas del Proyecto #{{ proyectoId }}
+      } @else {
+        Mis Tareas Pendientes
+      }
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
-  <ion-list lines="none">
+<ion-content class="ion-padding bg-gray-50">
+  <ion-list lines="none" class="bg-transparent">
+    
     @for (tarea of tareas$ | async; track tarea.id) {
       <ion-item-sliding>
-        <ion-item class="mb-2 rounded-lg shadow-sm border-l-4" 
-                  [class.border-success]="tarea.estadoId === 3"
-                  [class.border-warning]="tarea.estadoId === 2"
-                  [class.border-primary]="tarea.estadoId === 1">
+        <ion-item class="mb-3 rounded-xl shadow-sm border-l-4" 
+                  [class.border-green-500]="tarea.estadoId === 3"
+                  [class.border-yellow-500]="tarea.estadoId === 2"
+                  [class.border-blue-500]="tarea.estadoId === 1">
           <ion-label>
-            <h2 class="font-bold">{{ tarea.titulo }}</h2>
-            <p class="text-sm text-gray-500">{{ tarea.descripcion }}</p>
-            <ion-note color="medium" class="text-xs">
-              Límite: {{ tarea.fechaLimite }}
-            </ion-note>
+            <h2 class="font-bold text-gray-800">{{ tarea.titulo }}</h2>
+            <p class="text-sm text-gray-500 mt-1">{{ tarea.descripcion }}</p>
+            <div class="flex items-center gap-2 mt-2">
+              <ion-badge color="light" class="text-gray-600 font-normal">
+                <ion-icon name="calendar-outline" class="mr-1"></ion-icon> {{ tarea.fechaLimite }}
+              </ion-badge>
+              @if (!proyectoId) {
+                <ion-badge color="medium">Proy #{{ tarea.proyectoId }}</ion-badge>
+              }
+            </div>
           </ion-label>
+          
           <ion-badge slot="end" [color]="tarea.prioridadId === 1 ? 'danger' : 'primary'">
-            P{{ tarea.prioridadId }}
+            {{ tarea.prioridadId === 1 ? 'URGENTE' : 'Normal' }}
           </ion-badge>
         </ion-item>
 
         <ion-item-options side="end">
           <ion-item-option color="success" (click)="cambiarEstado(tarea.id, 3)">
-            <ion-icon name="checkmark-done" slot="icon-only"></ion-icon>
+            <ion-icon name="checkmark-done-outline" slot="icon-only"></ion-icon>
           </ion-item-option>
           <ion-item-option color="warning" (click)="cambiarEstado(tarea.id, 2)">
-            <ion-icon name="trending-up" slot="icon-only"></ion-icon>
+            <ion-icon name="time-outline" slot="icon-only"></ion-icon>
           </ion-item-option>
         </ion-item-options>
       </ion-item-sliding>
     } @empty {
-      <div class="flex flex-col items-center justify-center py-20 text-gray-400">
-        <ion-icon name="clipboard-outline" class="text-6xl mb-4"></ion-icon>
-        <p>No hay tareas en este proyecto.</p>
+      <div class="flex flex-col items-center justify-center py-20 text-gray-400 h-full">
+        <div class="bg-gray-100 p-6 rounded-full mb-4">
+          <ion-icon name="checkmark-circle-outline" class="text-6xl text-gray-300"></ion-icon>
+        </div>
+        <h3 class="text-lg font-semibold text-gray-600">¡Todo al día!</h3>
+        <p class="text-sm">No hay tareas pendientes aquí.</p>
       </div>
     }
   </ion-list>
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button color="primary">
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
+  @if (proyectoId) {
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button color="primary">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  }
 </ion-content>

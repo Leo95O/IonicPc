@@ -1,27 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common'; // Vital para pipes como | async
+import { IonicModule } from '@ionic/angular';   // Vital para <ion-content>, <ion-item>
+import { TareasRoutingModule } from './tareas-routing-module';
 import { TareasListComponent } from './components/tareas-list/tareas-list';
 
-import { TareasRoutingModule } from './tareas-routing-module';
-
-
-// src/app/features/tareas/tareas-module.ts
 @NgModule({
   declarations: [
-    TareasListComponent
+    TareasListComponent // Declaramos el componente aquí
   ],
   imports: [
     CommonModule,
-    IonicModule,
-    RouterModule.forChild([
-      { path: ':proyectoId', component: TareasListComponent }
-    ])
+    IonicModule, // <--- ¡ESTO ES LO QUE FALTABA PARA QUE SE VEA!
+    TareasRoutingModule
   ]
 })
-export class TareasModule {}
-
-
-
-
+export class TareasModule { }

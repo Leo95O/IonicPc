@@ -6,10 +6,10 @@ import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
 import { SharedModule } from './shared/shared-module';
 import { CoreModule } from './core/core-module';
-import { provideHttpClient } from '@angular/common/http';
 
-
-
+// IMPORTACIONES CRÍTICAS PARA QUE EL TOKEN FUNCIONE
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ApiInterceptor } from './core/interceptors/api.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,11 +22,18 @@ import { provideHttpClient } from '@angular/common/http';
     IonicModule.forRoot({}),
     SharedModule,
     CoreModule
-  
-
   ],
   providers: [
-    provideHttpClient(),
+    // 1. Habilitamos interceptores "Legacy" (de clase) en el cliente moderno
+    provideHttpClient(withInterceptorsFromDi()), 
+    
+    // 2. Registramos tu "Portero" (Interceptor) para que inyecte el Token
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiInterceptor,
+      multi: true
+    },
+    
     provideBrowserGlobalErrorListeners()
   ],
   bootstrap: [App]

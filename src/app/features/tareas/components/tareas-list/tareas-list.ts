@@ -8,32 +8,36 @@ import { Tarea } from '../../../../core/models/tarea.model';
   selector: 'app-tareas-list',
   templateUrl: './tareas-list.html',
   standalone: false
-  // Se eliminó la línea de styleUrls para evitar error por archivo faltante
 })
 export class TareasListComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private tareaService = inject(TareaService);
   
   public tareas$: Observable<Tarea[]> = this.tareaService.tareas$; 
-  public proyectoId?: number;
+  public proyectoId?: number; // Puede ser undefined ahora
 
   ngOnInit() {
-    // Usamos el pipe de la ruta para reaccionar a cambios en el ID del proyecto
     this.route.paramMap.pipe(
-      map(params => params.get('proyectoId')),
-      tap(id => {
-        if (id) {
-          this.proyectoId = +id;
-          this.cargarTareas();
+      tap(params => {
+        const idStr = params.get('proyectoId');
+        
+        if (idStr) {
+          // Caso A: Venimos de un proyecto específico
+          this.proyectoId = +idStr;
+        } else {
+          // Caso B: Venimos a ver "Mis Tareas" (General)
+          this.proyectoId = undefined;
         }
+        
+        // Ejecutamos la carga (con o sin ID)
+        this.cargarTareas();
       })
     ).subscribe();
   }
 
   cargarTareas() {
-    if (this.proyectoId) {
-      this.tareaService.listarPorProyecto(this.proyectoId).subscribe();
-    }
+    // El servicio ya es inteligente para manejar el undefined
+    this.tareaService.listar(this.proyectoId).subscribe();
   }
 
   cambiarEstado(tareaId: number, nuevoEstado: number) {
