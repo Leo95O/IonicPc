@@ -40,8 +40,7 @@ export class Login {
       next: async (success) => {
         await loading.dismiss();
         if (success) {
-          // Ajustado a tu estructura de rutas real:
-          this.router.navigate(['/inicio'], { replaceUrl: true }); 
+        this.router.navigate(['/features/inicio'], { replaceUrl: true });
         }
       },
       error: async (err) => {
