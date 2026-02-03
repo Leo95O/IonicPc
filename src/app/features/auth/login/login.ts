@@ -8,7 +8,7 @@ import { AuthService } from '../../../core/services/auth.service';
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.html',
-  styleUrls: ['./login.scss'], // Nota: Corregí styleUrl a styleUrls (array) que es estándar
+  styleUrls: ['./login.scss']
 })
 export class Login {
   private fb = inject(FormBuilder);
@@ -28,7 +28,6 @@ export class Login {
       return;
     }
 
-    // UI: Mostrar Loading nativo de Ionic
     const loading = await this.loadingCtrl.create({
       message: 'Autenticando...',
       spinner: 'crescent'
@@ -38,15 +37,16 @@ export class Login {
     const { email, password } = this.loginForm.value;
 
     this.authService.login(email, password).subscribe({
-      next: async () => {
+      next: async (success) => {
         await loading.dismiss();
-        // Redirigir al layout principal (ajusta la ruta según tu app-routing)
-        // Como no vi una ruta 'dashboard' o 'home' explícita, asumo raíz o layout
-        this.router.navigate(['/']); 
+        if (success) {
+          // Ajustado a tu estructura de rutas real:
+          this.router.navigate(['/inicio'], { replaceUrl: true }); 
+        }
       },
       error: async (err) => {
         await loading.dismiss();
-        const msg = err.message || err.error?.mensajes?.[0] || 'Credenciales inválidas';
+        const msg = err.error?.mensajes?.[0] || 'Error al iniciar sesión';
         this.presentToast(msg, 'danger');
       }
     });
@@ -54,9 +54,9 @@ export class Login {
 
   async presentToast(message: string, color: string) {
     const toast = await this.toastCtrl.create({
-      message: message,
+      message,
       duration: 3000,
-      color: color,
+      color,
       position: 'bottom'
     });
     await toast.present();

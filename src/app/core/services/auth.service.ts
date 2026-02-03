@@ -1,7 +1,7 @@
 import { Injectable, inject, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { Usuario, LoginResponseData } from '../models/usuario.model';
 import { ApiResponse } from '../models/api-response.model';
@@ -14,7 +14,6 @@ export class AuthService {
   private router = inject(Router);
   private readonly apiUrl = environment.apiUrl;
 
-  // Estado Reactivo con Signals (Mantiene el estándar camelCase)
   private _currentUser = signal<Usuario | null>(null);
   public currentUser = this._currentUser.asReadonly();
   public isAuthenticated = computed(() => !!this._currentUser());
@@ -23,19 +22,12 @@ export class AuthService {
     this.checkLocalStorage();
   }
 
-  /**
-   * Realiza el login. 
-   * Nota: El interceptor ya transformó la respuesta de snake_case a camelCase.
-   */
   login(email: string, password: string): Observable<boolean> {
     const url = `${this.apiUrl}/usuarios/login`;
-    
-    // El input para login usa llaves largas según el contrato técnico
     const body = { usuario_correo: email, usuario_password: password };
 
     return this.http.post<ApiResponse<LoginResponseData>>(url, body).pipe(
       map(response => {
-        // El interceptor filtra los tipos 2 y 3, por lo que aquí solo llega el éxito
         if (response.data) {
           this.setSession(response.data.usuario, response.data.token);
           return true;
@@ -49,7 +41,7 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     this._currentUser.set(null);
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/auth/login']);
   }
 
   private setSession(user: Usuario, token: string): void {
@@ -71,7 +63,6 @@ export class AuthService {
     }
   }
 
-  // Helper para obtener el token rápidamente en otros servicios si fuera necesario
   getToken(): string | null {
     return localStorage.getItem('token');
   }
