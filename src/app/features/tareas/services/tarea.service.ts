@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs'; // <--- NO OLVIDES IMPORTAR MAP
+import { BehaviorSubject, Observable, map, tap } from 'rxjs'; // <--- Importante: map
 import { environment } from '../../../../environments/environment';
 import { Tarea } from '../../../core/models/tarea.model';
 import { ApiResponse } from '../../../core/models/api-response.model';
@@ -24,7 +24,7 @@ export class TareaService {
 
     return this.http.get<ApiResponse<any>>(url).pipe(
       map(response => {
-        // --- AQUÍ ESTÁ LA MAGIA (EL MAPPER) ---
+        // --- AQUÍ ESTÁ LA SOLUCIÓN: EL MAPPER ---
         if (response.tipo === 1 && Array.isArray(response.data)) {
           const tareasMapeadas: Tarea[] = response.data.map((t: any) => ({
             id:              t.tarea_id,          // Traduce tarea_id -> id
@@ -48,9 +48,7 @@ export class TareaService {
     );
   }
 
-  // Mantenemos el método de actualizar estado
   actualizarEstado(tareaId: number, nuevoEstado: number): Observable<ApiResponse<any>> {
-    // Quitamos la barra final para construir la url /tareas/5
     const urlBase = this.apiUrl.endsWith('/') ? this.apiUrl.slice(0, -1) : this.apiUrl;
     return this.http.put<ApiResponse<any>>(`${urlBase}/${tareaId}`, { estado_id: nuevoEstado });
   }

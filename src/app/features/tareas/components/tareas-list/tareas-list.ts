@@ -16,27 +16,25 @@ export class TareasListComponent implements OnInit {
   public tareas$: Observable<Tarea[]> = this.tareaService.tareas$; 
   public proyectoId?: number; // Puede ser undefined ahora
 
-  ngOnInit() {
+ngOnInit() {
     this.route.paramMap.pipe(
       tap(params => {
         const idStr = params.get('proyectoId');
         
         if (idStr) {
-          // Caso A: Venimos de un proyecto específico
-          this.proyectoId = +idStr;
+          this.proyectoId = +idStr; // Modo Proyecto
         } else {
-          // Caso B: Venimos a ver "Mis Tareas" (General)
-          this.proyectoId = undefined;
+          this.proyectoId = undefined; // Modo "Mis Tareas"
         }
         
-        // Ejecutamos la carga (con o sin ID)
+        // ¡Cargamos siempre!
         this.cargarTareas();
       })
     ).subscribe();
   }
 
   cargarTareas() {
-    // El servicio ya es inteligente para manejar el undefined
+    // El servicio corregido ya sabe manejar undefined
     this.tareaService.listar(this.proyectoId).subscribe();
   }
 

@@ -23,11 +23,11 @@ import { ApiInterceptor } from './core/interceptors/api.interceptor';
     SharedModule,
     CoreModule
   ],
-  providers: [
-    // 1. Habilitamos interceptores "Legacy" (de clase) en el cliente moderno
+    providers: [
+    // 1. Habilitamos interceptores
     provideHttpClient(withInterceptorsFromDi()), 
     
-    // 2. Registramos tu "Portero" (Interceptor) para que inyecte el Token
+    // 2. Registramos tu Interceptor (El Portero)
     {
       provide: HTTP_INTERCEPTORS,
       useClass: ApiInterceptor,
@@ -39,3 +39,5 @@ import { ApiInterceptor } from './core/interceptors/api.interceptor';
   bootstrap: [App]
 })
 export class AppModule { }
+
+
