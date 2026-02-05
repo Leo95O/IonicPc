@@ -11,6 +11,10 @@
 
   <ion-content class="ion-padding-vertical">
 <ion-list lines="none" class="px-2">
+      <ion-item button detail="true">
+        <ion-icon slot="start" name="person-circle" color="primary"></ion-icon>
+        <ion-label>Mi Perfil</ion-label>
+      </ion-item>
       
       <ion-item routerLink="/features/tareas" routerDirection="root" detail="true" routerLinkActive="selected-item" [routerLinkActiveOptions]="{exact: true}">
         <ion-icon slot="start" name="list" color="secondary"></ion-icon>
@@ -18,14 +22,10 @@
       </ion-item>
 
       <ion-item routerLink="/features/proyectos" routerDirection="root" detail="true" routerLinkActive="selected-item">
-        <ion-icon slot="start" name="folder-open" color="primary"></ion-icon>
+        <ion-icon slot="start" name="folder-open" color="medium"></ion-icon>
         <ion-label>Proyectos</ion-label>
       </ion-item>
 
-      <ion-item button detail="true">
-        <ion-icon slot="start" name="person-circle" color="medium"></ion-icon>
-        <ion-label>Mi Perfil</ion-label>
-      </ion-item>
 
     </ion-list>
   </ion-content>
@@ -40,9 +40,3 @@
   </ion-footer>
 </ion-menu>
 
-<style>
-  .selected-item {
-    --background: var(--ion-color-light);
-    font-weight: bold;
-  }
-</style>

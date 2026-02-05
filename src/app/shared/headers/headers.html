@@ -1,25 +1,104 @@
-<ion-header class="ion-no-border shadow-sm bg-white">
-  <ion-toolbar color="light" class="px-2 md:px-6">
+<ion-header class="ion-no-border fixed top-0 w-full z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+  
+  <ion-toolbar style="--background: transparent;" class="px-2 lg:px-6 h-16 md:h-20">
 
-    <div slot="start" class="flex items-center" routerLink="/features/tareas">
-      <ion-icon name="layers" color="primary" class="text-2xl mr-2"></ion-icon>
-      <span class="font-bold text-xl md:text-2xl text-blue-500">
-        Tareas<span class="text-blue-600">RST</span>
-      </span>
-    </div>
+    <div class="flex items-center justify-between w-full max-w-7xl mx-auto">
 
-    <div class="hidden sm:flex flex-row items-center justify-end w-full gap-6">
-      <div class="border-l pl-4 ml-2 flex items-center gap-2">
-        <span class="text-sm text-gray-500">Bienvenido</span>
-        <ion-avatar class="w-8 h-8 cursor-pointer hover:opacity-80">
-          <img src="https://ionicframework.com/docs/img/demos/avatar.svg" alt="Perfil" />
-        </ion-avatar>
+      <div class="flex items-center gap-4">
+        
+        <ion-buttons slot="start">
+          <ion-button (click)="onMenuClick()" color="primary" class="hover:bg-blue-50 rounded-full transition-colors h-10 w-10">
+            <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+
+        <div class="flex items-center gap-3 cursor-pointer group select-none" routerLink="/features/tareas">
+          <img src="assets/RestaurantPe.png" alt="Logo" class="h-8 md:h-10 w-auto group-hover:scale-105 transition-transform duration-300">
+          <div class="flex flex-col justify-center leading-none">
+            <span class="font-bold text-xl md:text-2xl tracking-tight text-[#222428]">
+              Tareas<span class="text-[#3B82F6]">RST</span>
+            </span>
+          </div>
+        </div>
       </div>
+
+      <div class="hidden md:flex items-center gap-1 mx-6">
+        <a *ngFor="let item of mainMenu"
+           [routerLink]="item.route"
+           routerLinkActive="text-[#3B82F6] bg-blue-50"
+           class="px-4 py-2 rounded-lg text-sm font-bold text-[#92949c] hover:text-[#3B82F6] hover:bg-gray-50 transition-all duration-200 flex items-center gap-2 group">
+          <ion-icon [name]="item.icon" class="text-lg transition-colors"></ion-icon>
+          {{ item.label }}
+        </a>
+      </div>
+
+      <div class="flex items-center gap-2 md:gap-4" *ngIf="user$ | async as user">
+        
+        <button class="relative p-2 rounded-full text-[#92949c] hover:text-[#3B82F6] hover:bg-[#f4f5f8] transition-colors focus:outline-none">
+          <ion-icon name="notifications-outline" class="text-2xl"></ion-icon>
+          <span class="absolute top-2 right-2 h-2.5 w-2.5 rounded-full bg-[#EF4444] border-2 border-white"></span>
+        </button>
+
+        <div class="hidden md:block h-8 w-px bg-gray-200 mx-1"></div>
+
+        <div class="relative group/user">
+          
+          <div id="user-menu-trigger" class="flex items-center gap-3 p-1 pr-1 md:pr-4 md:py-1 rounded-full hover:bg-gray-100 md:bg-[#f4f5f8] md:hover:bg-gray-200 border border-transparent md:hover:border-gray-300 cursor-pointer transition-all duration-200 select-none">
+            
+            <ion-avatar class="w-8 h-8 md:w-9 md:h-9 border-2 border-white shadow-sm bg-gray-200">
+              <img [src]="user.avatarUrl" alt="Perfil" />
+            </ion-avatar>
+
+            <div class="hidden md:flex flex-col items-start ml-1">
+              <span class="text-sm font-bold text-[#222428] leading-tight">{{ user.name }}</span>
+              <span class="text-[10px] uppercase tracking-wider font-bold text-[#3B82F6] mt-0.5">
+                {{ user.role }}
+              </span>
+            </div>
+
+            <ion-icon name="chevron-down-outline" class="hidden md:block text-[#92949c] text-xs ml-1 transition-transform duration-300"></ion-icon>
+          </div>
+
+          <div class="hidden md:block absolute top-full right-0 mt-3 w-64 bg-[#222428] text-white text-xs rounded-xl p-4 shadow-xl opacity-0 invisible group-hover/user:opacity-100 group-hover/user:visible transition-all duration-300 transform translate-y-[-10px] group-hover/user:translate-y-0 z-[60] pointer-events-none">
+            <div class="absolute -top-1.5 right-6 w-3 h-3 bg-[#222428] transform rotate-45"></div>
+            
+            <p class="font-bold text-gray-200 mb-1">Información</p>
+            <p class="text-gray-400 leading-relaxed">{{ user.description }}</p>
+          </div>
+
+        </div> 
+        <ion-popover trigger="user-menu-trigger" dismissOnSelect="true" side="bottom" alignment="end" class="mt-2" style="--width: 240px; --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);">
+          <ng-template>
+            <div class="bg-white py-2">
+              
+              <div class="px-4 py-3 border-b border-gray-100 mb-2">
+                 <p class="text-sm font-bold text-[#222428]">{{ user.name }}</p>
+                 <p class="text-xs text-[#92949c]">{{ user.role }}</p>
+              </div>
+
+              <button routerLink="/profile" class="flex items-center gap-3 px-4 py-2.5 text-sm text-[#222428] hover:bg-[#f4f5f8] w-full text-left transition-colors">
+                <ion-icon name="person-circle-outline" class="text-lg text-[#3B82F6]"></ion-icon> 
+                Mi Perfil
+              </button>
+
+              <button routerLink="/settings" class="flex items-center gap-3 px-4 py-2.5 text-sm text-[#222428] hover:bg-[#f4f5f8] w-full text-left transition-colors">
+                <ion-icon name="settings-outline" class="text-lg text-[#92949c]"></ion-icon> 
+                Configuración
+              </button>
+
+              <div class="border-t border-gray-100 my-2"></div>
+
+              <button (click)="logout()" class="flex items-center gap-3 px-4 py-2.5 text-sm text-[#EF4444] hover:bg-red-50 w-full text-left font-medium transition-colors">
+                <ion-icon name="log-out-outline" class="text-lg"></ion-icon> 
+                Cerrar Sesión
+              </button>
+
+            </div>
+          </ng-template>
+        </ion-popover>
+
+      </div>
+
     </div>
-
-    <ion-buttons slot="end" class="sm:hidden">
-      <ion-menu-button menu="mobile-menu" color="primary"></ion-menu-button>
-    </ion-buttons>
-
   </ion-toolbar>
 </ion-header>

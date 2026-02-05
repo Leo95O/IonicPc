@@ -1,38 +1,95 @@
-<ion-content class="ion-padding">
-  <div class="flex flex-col h-full justify-center items-center">
-    
-    <ion-card class="w-full max-w-md">
-      <ion-card-header>
-        <ion-card-title class="text-center text-2xl font-bold">Bienvenido</ion-card-title>
-        <ion-card-subtitle class="text-center">Ingresa a Tareas.local</ion-card-subtitle>
-      </ion-card-header>
+<ion-content>
+  <div class="min-h-screen w-full flex items-center justify-center bg-[#f4f5f8] p-6">
 
-      <ion-card-content>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="w-full max-w-5xl bg-white rounded-[2.5rem] shadow-xl overflow-hidden flex flex-col lg:flex-row">
+
+      <div class="relative w-full h-auto min-h-[160px] lg:h-auto lg:w-1/2 bg-[#3B82F6] flex flex-row lg:flex-col justify-center items-center p-8 lg:p-12 z-10 rounded-b-[3rem] lg:rounded-none shadow-lg lg:shadow-none">
+        
+        <div class="absolute top-[-50%] left-[-20%] w-64 h-64 lg:w-96 lg:h-96 rounded-full bg-white opacity-10 blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-[-20%] right-[-20%] w-40 h-40 lg:w-80 lg:h-80 rounded-full bg-[#3dc2ff] opacity-20 blur-2xl pointer-events-none"></div>
+
+        <div class="relative z-10 flex-shrink-0">
+          <img src="assets/RestaurantPe.png" 
+               alt="Logo" 
+               class="w-20 sm:w-24 lg:w-40 h-auto drop-shadow-md animate-fade-in transition-all duration-300">
+        </div>
           
-          <ion-item class="ion-margin-bottom">
-            <ion-label position="floating">Correo Electrónico</ion-label>
-            <ion-input type="email" formControlName="email" placeholder="email@ejemplo.com"></ion-input>
-          </ion-item>
-          <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-red-500 text-sm px-4">
-            Correo inválido
-          </div>
+        <div class="relative z-10 flex flex-col justify-center text-left lg:text-center text-white ml-5 lg:ml-0 lg:mt-6">
+          
+          <h2 class="text-xl lg:text-3xl font-bold font-sans tracking-tight leading-tight">
+            Bienvenido
+          </h2>
 
-          <ion-item class="ion-margin-bottom">
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" formControlName="password"></ion-input>
-          </ion-item>
-          <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-red-500 text-sm px-4">
-            Contraseña requerida
-          </div>
+          <p class="text-blue-100 text-xs sm:text-sm lg:text-lg mt-1 lg:mt-4 max-w-[150px] sm:max-w-xs lg:max-w-sm leading-tight lg:leading-relaxed">
+            Gestor de tareas para tu restaurante.
+          </p>
+        </div>
 
-          <ion-button expand="block" type="submit" [disabled]="loginForm.invalid" class="mt-6">
-            Ingresar
-          </ion-button>
+      </div>
 
-        </form>
-      </ion-card-content>
-    </ion-card>
+      <div class="relative w-full lg:w-1/2 bg-white flex flex-col justify-center p-8 sm:p-12 lg:p-16 -mt-6 lg:mt-0 z-0 pt-10 lg:pt-16">
+        
+        <div class="w-full max-w-sm mx-auto">
+          
+          <h3 class="hidden lg:block text-[#222428] text-3xl font-bold mb-8 text-left">Ingresa a tu cuenta</h3>
+          
+          <h3 class="lg:hidden text-[#222428] text-xl font-bold mb-6 text-center">Iniciar Sesión</h3>
 
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+            <div class="group">
+              <label class="block text-sm font-bold text-[#222428] mb-2 ml-1">Correo Electrónico</label>
+              <div class="relative flex items-center bg-[#f4f5f8] rounded-2xl px-4 py-3.5 transition-all duration-200 focus-within:bg-white focus-within:ring-2 focus-within:ring-[#3B82F6] focus-within:shadow-md border border-transparent focus-within:border-blue-100">
+                <ion-icon name="mail" class="text-xl text-[#92949c] mr-3 group-focus-within:text-[#3B82F6] transition-colors"></ion-icon>
+                <input 
+                  type="email" 
+                  formControlName="email"
+                  placeholder="usuario@restaurant.pe"
+                  class="w-full bg-transparent border-none text-[#222428] placeholder-gray-400 focus:outline-none font-medium text-base h-full"
+                />
+              </div>
+               <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid" class="text-[#EF4444] text-xs mt-1 ml-2 flex items-center animate-fade-in">
+                  <ion-icon name="alert-circle" class="mr-1"></ion-icon> Correo inválido
+               </div>
+            </div>
+
+            <div class="group">
+              <label class="block text-sm font-bold text-[#222428] mb-2 ml-1">Contraseña</label>
+              <div class="relative flex items-center bg-[#f4f5f8] rounded-2xl px-4 py-3.5 transition-all duration-200 focus-within:bg-white focus-within:ring-2 focus-within:ring-[#3B82F6] focus-within:shadow-md border border-transparent focus-within:border-blue-100">
+                <ion-icon name="lock-closed" class="text-xl text-[#92949c] mr-3 group-focus-within:text-[#3B82F6] transition-colors"></ion-icon>
+                <input 
+                  [type]="showPassword ? 'text' : 'password'" 
+                  formControlName="password"
+                  placeholder="••••••••••••"
+                  class="w-full bg-transparent border-none text-[#222428] placeholder-gray-400 focus:outline-none font-medium text-base h-full"
+                />
+                <button type="button" (click)="togglePassword()" class="text-[#92949c] hover:text-[#3B82F6] focus:outline-none p-1">
+                  <ion-icon [name]="showPassword ? 'eye-off' : 'eye'" class="text-xl"></ion-icon>
+                </button>
+              </div>
+              
+              <div class="flex justify-between items-start mt-2 px-1">
+                 <div class="min-h-[20px]">
+                    <span *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-[#EF4444] text-xs flex items-center animate-fade-in">
+                      <ion-icon name="alert-circle" class="mr-1"></ion-icon> Requerida
+                    </span>
+                 </div>
+                 <a href="#" class="text-xs font-bold text-[#3B82F6] hover:underline">¿Olvidaste tu contraseña?</a>
+              </div>
+            </div>
+
+            <button 
+              type="submit" 
+              [disabled]="loginForm.invalid"
+              class="w-full bg-[#3B82F6] hover:bg-[#3171e0] active:scale-[0.98] text-white font-bold text-lg rounded-2xl py-4 shadow-lg shadow-blue-500/30 transition-all duration-200 mt-2 disabled:opacity-50 disabled:shadow-none">
+              Ingresar
+            </button>
+
+          </form>
+
+        </div>
+      </div>
+
+    </div>
   </div>
 </ion-content>

@@ -17,10 +17,15 @@ export class Login {
   private loadingCtrl = inject(LoadingController);
   private toastCtrl = inject(ToastController);
 
+
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(3)]]
   });
+  showPassword = false;
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   async onSubmit() {
     if (this.loginForm.invalid) {
