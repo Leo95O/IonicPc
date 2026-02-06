@@ -26,7 +26,11 @@ const routes: Routes = [
       {
         path: 'tareas',
         loadChildren: () => import('./tareas/tareas-module').then(m => m.TareasModule)
-      }
+      },
+      {
+        path: 'disenador',
+        loadChildren: () => import('./disenador-plano/disenador-plano-module').then(m => m.DisenadorPlanoModule)
+      },  
     ]
   }
 ];

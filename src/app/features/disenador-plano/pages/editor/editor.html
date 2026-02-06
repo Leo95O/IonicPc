@@ -1,0 +1,64 @@
+<ion-content [fullscreen]="true">
+  <div class="editor-container">
+    <div class="toolbar shadow-lg">
+      <button (click)="agregarMesa('rectangular')" class="btn-tool">
+        <fa-icon [icon]="['fas', 'square']"></fa-icon> + Mesa Rect
+      </button>
+      <button (click)="agregarMesa('circular')" class="btn-tool">
+        <fa-icon [icon]="['fas', 'circle']"></fa-icon> + Mesa Circ
+      </button>
+      <div class="divider"></div>
+      <div class="flex items-center gap-2 px-2">
+        <span class="text-xs font-bold text-gray-500">MODO UNIÓN</span>
+        <ion-toggle (ionChange)="modoUnion.set($event.detail.checked)"></ion-toggle>
+      </div>
+    </div>
+
+    <svg #canvas
+         [attr.viewBox]="viewBox()"
+         (pointermove)="onPointerMove($event)"
+         (pointerup)="onPointerUp()"
+         class="map-canvas">
+      
+      <polygon [attr.points]="puntosSVG()" class="local-shape" />
+
+      <g *ngFor="let item of items()"
+         [attr.transform]="getTransform(item)"
+         class="item-group"
+         [class.is-dragging]="itemActual()?.id === item.id">
+        
+        <ng-container *ngIf="!modoUnion()">
+          <rect *ngIf="item.tipo !== 'circular'"
+                [attr.width]="getMetrosEnPixels(item.dimensiones.ancho + distSeguridad())"
+                [attr.height]="getMetrosEnPixels((item.dimensiones.largo || 0) + distSeguridad())"
+                [attr.x]="getOffsetSeguridad(item.dimensiones.ancho)"
+                [attr.y]="getOffsetSeguridad(item.dimensiones.largo || 0)"
+                class="safety-zone" />
+          
+          <circle *ngIf="item.tipo === 'circular'"
+                  [attr.r]="getMetrosEnPixels((item.dimensiones.ancho + distSeguridad()) / 2)"
+                  class="safety-zone" />
+        </ng-container>
+
+        <g (pointerdown)="onPointerDown($event, item)">
+          <rect *ngIf="item.tipo !== 'circular'"
+                [attr.width]="getMetrosEnPixels(item.dimensiones.ancho)"
+                [attr.height]="getMetrosEnPixels(item.dimensiones.largo || 0)"
+                [attr.x]="getMetrosEnPixels(-item.dimensiones.ancho / 200)"
+                [attr.y]="getMetrosEnPixels(-(item.dimensiones.largo || 0) / 200)"
+                class="table-shape" />
+          
+          <circle *ngIf="item.tipo === 'circular'"
+                  [attr.r]="getMetrosEnPixels(item.dimensiones.ancho / 200)"
+                  class="table-shape" />
+        </g>
+
+        <circle r="8"
+                [attr.cx]="getMetrosEnPixels(item.dimensiones.ancho / 200) + 15"
+                cy="0"
+                class="rotate-handle"
+                (pointerdown)="onPointerDown($event, item, true)" />
+      </g>
+    </svg>
+  </div>
+</ion-content>
