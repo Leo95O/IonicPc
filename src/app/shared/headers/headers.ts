@@ -20,6 +20,7 @@ export class Headers implements OnInit { // Recomendado implementar OnInit
     { label: 'Mis Tareas', icon: 'list-outline', route: '/features/tareas' },
     { label: 'Proyectos', icon: 'folder-open-outline', route: '/features/proyectos' },
     { label: 'Sucursales', icon: 'business-outline', route: '/features/sucursales' },
+    { label: 'Diseñador', icon: 'map-outline', route: '/features/disenador' },
   ];
 
   constructor(

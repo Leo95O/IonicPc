@@ -11,12 +11,12 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'tareas', // <--- CAMBIO CLAVE: Ahora inicia en Tareas
+        redirectTo: 'tareas',
         pathMatch: 'full'
       },
       {
         path: 'inicio',
-        redirectTo: 'tareas', // Redirección de seguridad para evitar "limbo"
+        redirectTo: 'tareas',
         pathMatch: 'full'
       },
       {

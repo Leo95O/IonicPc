@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 
-
-
 @Component({
   selector: 'app-layout',
   standalone: false,
@@ -10,7 +8,6 @@ import { MenuController } from '@ionic/angular';
   styleUrl: './layout.scss',
 })
 export class Layout {
-  
   
   // Controla si el Sidebar está "Anclado/Fijo" en pantallas grandes
   public isSidebarDocked: boolean = true;
@@ -26,9 +23,8 @@ export class Layout {
       // EN DESKTOP: Alternamos entre mostrar u ocultar el panel fijo
       this.isSidebarDocked = !this.isSidebarDocked;
     } else {
-      // EN MÓVIL: Usamos la función nativa de Ionic para abrir/cerrar el menú flotante
-      this.menuCtrl.toggle();
+      // EN MÓVIL: Usamos el ID específico 'mobile-menu' definido en el HTML
+      this.menuCtrl.toggle('mobile-menu');
     }
   }
-  
 }

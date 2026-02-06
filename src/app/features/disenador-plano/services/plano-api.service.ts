@@ -30,16 +30,19 @@ export class PlanoApiService {
   /**
    * Guarda o actualiza un plano
    */
-  guardarPlano(nombre: string, vertices: any[], items: ItemMapa[], id?: string): Observable<any> {
+/**
+   * Guarda o actualiza un plano (Versión Fabric.js)
+   */
+  guardarPlano(nombre: string, configuracionJson: any, id?: string): Observable<any> {
     const payload = {
       nombre,
-      configuracion: {
-        vertices,
-        items
-      }
+      configuracion: configuracionJson // Ahora enviamos el objeto completo de Fabric
     };
     
-    // Si hay ID, podrías hacer PUT, aquí usaremos POST por simplicidad inicial
+    // Si hay ID, podrías hacer PUT, aquí usaremos POST por simplicidad inicial o según tu backend
+    // Asegúrate que tu backend soporte recibir un JSON grande en 'configuracion'
     return this.http.post(this.apiUrl, payload);
   }
-}
+    // Si hay ID, podrías hacer PUT, aquí usaremos POST por simplicidad inicial
+
+  }
