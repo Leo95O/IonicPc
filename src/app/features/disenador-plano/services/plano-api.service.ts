@@ -9,14 +9,28 @@ import { ItemMapa } from '../../../core/models/item-mapa.model';
   providedIn: 'root'
 })
 export class PlanoApiService {
-  private apiUrl = `${environment.apiUrl}/planos`; // Asegúrate de tener esta ruta en tu backend PHP
+  private apiUrl = `${environment.apiUrl}/planos`; 
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Guarda el estado actual del diseño
+   * Obtiene la lista de todos los planos guardados (Nombre + ID + Fecha)
    */
-  guardarPlano(nombre: string, vertices: any[], items: ItemMapa[]): Observable<any> {
+  listarPlanos(): Observable<PlanoLocal[]> {
+    return this.http.get<PlanoLocal[]>(this.apiUrl);
+  }
+
+  /**
+   * Obtiene el detalle completo de un plano para editarlo
+   */
+  obtenerPlano(id: number | string): Observable<PlanoLocal> {
+    return this.http.get<PlanoLocal>(`${this.apiUrl}/${id}`);
+  }
+
+  /**
+   * Guarda o actualiza un plano
+   */
+  guardarPlano(nombre: string, vertices: any[], items: ItemMapa[], id?: string): Observable<any> {
     const payload = {
       nombre,
       configuracion: {
@@ -24,13 +38,8 @@ export class PlanoApiService {
         items
       }
     };
+    
+    // Si hay ID, podrías hacer PUT, aquí usaremos POST por simplicidad inicial
     return this.http.post(this.apiUrl, payload);
-  }
-
-  /**
-   * Recupera un plano existente
-   */
-  obtenerPlano(id: string): Observable<PlanoLocal> {
-    return this.http.get<PlanoLocal>(`${this.apiUrl}/${id}`);
   }
 }

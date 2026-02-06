@@ -1,3 +1,5 @@
+import { ItemMapa } from './item-mapa.model'; // <--- Importamos esto
+
 export interface Punto {
   x: number; // Metros
   y: number; // Metros
@@ -12,13 +14,17 @@ export enum TipoRestaurante {
 
 export interface ConfiguracionPlano {
   tipo: TipoRestaurante;
-  distanciaMinima: number; // cm
-  escalaPixelsPorMetro: number;
+  distanciaMinima?: number; // cm (Opcional)
+  escalaPixelsPorMetro?: number; // (Opcional)
+  
+  // Agregamos estas propiedades para que coincidan con el JSON de la BD
+  vertices?: Punto[]; 
+  items?: ItemMapa[]; 
 }
 
 export interface PlanoLocal {
   id?: string;
   nombre: string;
-  vertices: Punto[]; // Polígono del local
+  // vertices: Punto[]; <--- Lo quitamos de aquí, ahora vive dentro de configuracion
   configuracion: ConfiguracionPlano;
 }

@@ -1,18 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { EditorPage } from './editor'; // <--- Corregido: EditorPage en vez de Editor
+import { IonicModule } from '@ionic/angular';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { Editor } from './editor';
-
-describe('Editor', () => {
-  let component: Editor;
-  let fixture: ComponentFixture<Editor>;
+describe('EditorPage', () => {
+  let component: EditorPage;
+  let fixture: ComponentFixture<EditorPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Editor]
-    })
-    .compileComponents();
+      declarations: [EditorPage], // <--- Corregido
+      imports: [
+        IonicModule.forRoot(),
+        RouterTestingModule,
+        HttpClientTestingModule
+      ]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Editor);
+    fixture = TestBed.createComponent(EditorPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

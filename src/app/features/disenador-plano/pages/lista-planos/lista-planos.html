@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Mis Planos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding bg-slate-50">
+  
+  <div *ngIf="cargando()" class="flex justify-center p-10">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+  <div *ngIf="!cargando() && planos().length === 0" class="text-center p-10 text-gray-500">
+    <p>No tienes planos guardados aún.</p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" *ngIf="!cargando()">
+    
+    <div routerLink="editor/nuevo" 
+         class="h-40 border-2 border-dashed border-blue-300 rounded-xl flex flex-col items-center justify-center cursor-pointer hover:bg-blue-50 transition-colors text-blue-600">
+      <span class="font-bold">+ Crear Nuevo Plano</span>
+    </div>
+
+    <ion-card *ngFor="let plano of planos()" 
+              [routerLink]="['editor', plano.id]"
+              class="cursor-pointer hover:shadow-lg transition-shadow m-0">
+      <ion-card-header>
+        <ion-card-title>{{ plano.nombre }}</ion-card-title>
+        <ion-card-subtitle>ID: #{{ plano.id }}</ion-card-subtitle>
+      </ion-card-header>
+    </ion-card>
+
+  </div>
+</ion-content>
