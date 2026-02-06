@@ -1,0 +1,51 @@
+<div *ngIf="fase === 'A' && paredSeleccionada" 
+     class="absolute top-20 left-1/2 -translate-x-1/2 bg-white text-slate-900 p-4 rounded-xl shadow-2xl z-50 border-2 border-blue-500 w-72 animate-in fade-in zoom-in duration-200">
+  
+  <div class="flex justify-between items-center mb-2">
+    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Calibrar Medida Real</h3>
+    <button (click)="cerrar.emit()" class="text-slate-400 hover:text-slate-600">
+      <ion-icon name="close"></ion-icon>
+    </button>
+  </div>
+
+  <div class="mb-3 text-sm text-slate-600">
+    La pared seleccionada tiene <strong class="text-blue-600">{{ paredSeleccionada.longitudPx | number:'1.0-0' }}px</strong>.
+    <br>¿Cuántos metros son en la realidad?
+  </div>
+
+  <div class="flex gap-2">
+    <input type="number" [(ngModel)]="inputMetros" placeholder="Ej: 5.20" 
+           class="flex-1 border border-slate-300 rounded px-3 py-2 text-lg focus:ring-2 focus:ring-blue-500 outline-none"
+           (keyup.enter)="onCalibrar()">
+    
+    <button (click)="onCalibrar()" 
+            [disabled]="!inputMetros"
+            class="bg-blue-600 text-white px-4 rounded font-bold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+      OK
+    </button>
+  </div>
+</div>
+
+<div *ngIf="fase === 'B'" 
+     class="absolute bottom-6 right-6 bg-slate-800/90 backdrop-blur border border-slate-600 p-4 rounded-lg text-slate-100 w-64 shadow-xl z-40">
+  
+  <h3 class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-2">
+    <ion-icon name="settings-outline"></ion-icon> Configuración de Aforo
+  </h3>
+
+  <div class="space-y-1">
+    <div class="flex justify-between text-xs mb-1">
+      <span>Holgura de Seguridad</span>
+      <span class="font-mono text-blue-400">{{ holguraCm }} cm</span>
+    </div>
+    
+    <ion-range [min]="50" [max]="200" [value]="holguraCm" (ionChange)="onHolguraChangeEvt($event)" color="primary">
+      <ion-icon slot="start" size="small" name="accessibility-outline" class="text-slate-500"></ion-icon>
+      <ion-icon slot="end" size="small" name="people-outline" class="text-slate-500"></ion-icon>
+    </ion-range>
+    
+    <p class="text-[10px] text-slate-500 leading-tight mt-2">
+      Espacio reservado alrededor de cada mesa para sillas y paso de mozos.
+    </p>
+  </div>
+</div>

@@ -1,0 +1,9 @@
+/* Fondo oscuro general para coincidir con el editor */
+ion-content {
+  --background: #0f172a; /* Slate 900 */
+}
+
+/* Ajustes finos si Tailwind no carga inmediatamente */
+.hover\:bg-slate-750:hover {
+    background-color: #1e293b; /* Un poco más claro que el 800 */
+}

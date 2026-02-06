@@ -1,53 +1,41 @@
-<ion-content [scrollY]="false">
-  <div class="editor-layout">
+<ion-content [fullscreen]="true">
+  <div class="flex h-screen w-full bg-slate-900 overflow-hidden text-slate-100 font-sans">
     
-    <div class="toolbar-side">
-      <div class="tool-group">
-        <span class="group-title">Estructura</span>
-        <button (click)="setModo('pared')" [class.active]="modo() === 'pared'" class="tool-btn" title="Dibujar Paredes">
-          <fa-icon [icon]="['fas', 'pen-ruler']"></fa-icon>
-          <span>Pared</span>
-        </button>
-        <button (click)="setModo('select')" [class.active]="modo() === 'select'" class="tool-btn" title="Seleccionar / Mover">
-          <fa-icon [icon]="['fas', 'arrow-pointer']"></fa-icon>
-          <span>Mover</span>
-        </button>
-      </div>
-
-      <div class="tool-group">
-        <span class="group-title">Mobiliario</span>
-        <button (click)="agregarMueble('rect')" class="tool-btn">
-          <fa-icon [icon]="['fas', 'square']"></fa-icon>
-          <span>Cuadrada</span>
-        </button>
-        <button (click)="agregarMueble('circle')" class="tool-btn">
-          <fa-icon [icon]="['fas', 'circle']"></fa-icon>
-          <span>Redonda</span>
-        </button>
-      </div>
-
-      <div class="spacer"></div>
-
-      <div class="actions">
-        <ion-button color="danger" fill="clear" (click)="limpiarLienzo()" title="Borrar Todo">
-          <ion-icon name="trash-outline" slot="icon-only"></ion-icon>
-        </ion-button>
-        <ion-button color="primary" (click)="guardar()">
-          <ion-icon name="save-outline" slot="start"></ion-icon>
-          Guardar
-        </ion-button>
-      </div>
+    <div class="w-72 h-full z-20 shrink-0">
+      <app-tools-sidebar
+        [fase]="fase()"
+        [modo]="modo()"
+        [ppm]="ppm()"
+        (setModo)="onSetModo($event)"
+        (finalizarFaseA)="onFinalizarFaseA()"
+        (addMueble)="onAddMueble($event)"
+        (guardar)="onGuardar()">
+      </app-tools-sidebar>
     </div>
 
-    <div class="canvas-container" #canvasContainer>
-      <canvas id="fabric-canvas"></canvas>
+    <main class="flex-1 relative bg-[#151515] overflow-hidden">
       
-      @if (modo() === 'pared') {
-        <div class="help-toast">
-          Click para iniciar ➜ Click para esquinas ➜ Click en inicio para cerrar.
-        </div>
-      }
-    </div>
+      <div class="absolute inset-0 opacity-10 pointer-events-none" 
+           style="background-image: radial-gradient(#888 1px, transparent 1px); background-size: 20px 20px;">
+      </div>
 
+      <div #canvasContainer class="w-full h-full relative z-0">
+        <canvas id="canvas-editor"></canvas>
+      </div>
+
+      <app-properties-panel
+        [fase]="fase()"
+        [paredSeleccionada]="paredSeleccionada()"
+        [holguraCm]="holguraCm()"
+        (calibrar)="onCalibrarPared($event)"
+        (holguraChange)="onHolguraChange($event)"
+        (cerrar)="onCerrarPanel()">
+      </app-properties-panel>
+
+      <div class="absolute top-4 right-4 bg-slate-900/50 backdrop-blur px-3 py-1 rounded-full text-[10px] text-slate-400 border border-slate-700 pointer-events-none select-none">
+        IonicCAD Engine v1.0
+      </div>
+
+    </main>
   </div>
 </ion-content>

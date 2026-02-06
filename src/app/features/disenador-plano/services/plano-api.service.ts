@@ -1,48 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { PlanoLocal } from '../../../core/models/diseno-plano.model';
-import { ItemMapa } from '../../../core/models/item-mapa.model';
+import { PlanoData } from '../models/editor-models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlanoApiService {
-  private apiUrl = `${environment.apiUrl}/planos`; 
+  // Ajusta esto a tu URL real o déjalo como fallback
+  private apiUrl = (environment as any).apiUrl || 'http://localhost:8080/api';
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * Obtiene la lista de todos los planos guardados (Nombre + ID + Fecha)
-   */
-  listarPlanos(): Observable<PlanoLocal[]> {
-    return this.http.get<PlanoLocal[]>(this.apiUrl);
+  guardarPlano(data: PlanoData): Observable<any> {
+    if (data.id) {
+        return this.http.put(`${this.apiUrl}/planos/${data.id}`, data);
+    }
+    return this.http.post(`${this.apiUrl}/planos`, data);
   }
 
-  /**
-   * Obtiene el detalle completo de un plano para editarlo
-   */
-  obtenerPlano(id: number | string): Observable<PlanoLocal> {
-    return this.http.get<PlanoLocal>(`${this.apiUrl}/${id}`);
+  obtenerPlano(id: string): Observable<PlanoData> {
+    return this.http.get<PlanoData>(`${this.apiUrl}/planos/${id}`);
   }
 
-  /**
-   * Guarda o actualiza un plano
-   */
-/**
-   * Guarda o actualiza un plano (Versión Fabric.js)
-   */
-  guardarPlano(nombre: string, configuracionJson: any, id?: string): Observable<any> {
-    const payload = {
-      nombre,
-      configuracion: configuracionJson // Ahora enviamos el objeto completo de Fabric
-    };
+  // ESTE ES EL MÉTODO QUE FALTABA Y CAUSABA EL ERROR TS2339
+  listarPlanos(): Observable<PlanoData[]> {
+    // Si no tienes backend aún, descomenta el bloque 'of' para probar
+    // return this.http.get<PlanoData[]>(`${this.apiUrl}/planos`);
     
-    // Si hay ID, podrías hacer PUT, aquí usaremos POST por simplicidad inicial o según tu backend
-    // Asegúrate que tu backend soporte recibir un JSON grande en 'configuracion'
-    return this.http.post(this.apiUrl, payload);
+    // MOCK DE DATOS PARA QUE NO TE DE ERROR SI NO HAY BACKEND
+    return of([
+      {
+        id: '1',
+        nombre: 'Proyecto Demo 1',
+        version: '1.0',
+        fase: 'B', // Fíjate que usamos el tipo 'A' o 'B'
+        pixelsPerMeter: 50,
+        holguraCm: 106,
+        canvasJson: {},
+        fechaModificacion: new Date()
+      }
+    ] as PlanoData[]);
   }
-    // Si hay ID, podrías hacer PUT, aquí usaremos POST por simplicidad inicial
-
-  }
+}

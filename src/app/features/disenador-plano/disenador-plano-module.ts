@@ -1,25 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms'; // Agrega FormsModule si usas ngModel
-import { IonicModule } from '@ionic/angular'; // <--- IMPORTANTE PARA EL ERROR DE ION-HEADER
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
+import { IonicModule } from '@ionic/angular';
+import { FormsModule } from '@angular/forms';
 import { DisenadorPlanoRoutingModule } from './disenador-plano-routing-module';
-import { EditorPage } from './pages/editor/editor';
-import { ListaPlanosPage } from './pages/lista-planos/lista-planos'; // <--- Importamos la lista
+
+// NO importamos páginas aquí porque ahora son Standalone y se cargan en el Routing.
 
 @NgModule({
-  declarations: [
-    EditorPage,
-    ListaPlanosPage // <--- Declaramos la lista
-  ],
   imports: [
     CommonModule,
-    IonicModule, // <--- ESTO SOLUCIONA EL ERROR DE 'ion-header'
-    ReactiveFormsModule,
     FormsModule,
-    FontAwesomeModule,
+    IonicModule,
     DisenadorPlanoRoutingModule
+  ],
+  declarations: [
+    // DEJAR VACÍO (Si ListaPlanosPage y EditorPage son standalone)
   ]
 })
-export class DisenadorPlanoModule { }
+export class DisenadorPlanoModule {}
